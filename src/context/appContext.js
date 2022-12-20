@@ -28,7 +28,7 @@ const initialState = {
 	token: token,
 	userLocation: userLocation || "",
 	jobLocation: userLocation || "",
-	showSideBar: false,
+	showSidebar: false,
 };
 
 const AppContext = React.createContext();
@@ -101,6 +101,7 @@ const AppProvider = ({ children }) => {
 	};
 
 	const toggleSidebar = () => {
+		// console.log("toggle side bar");
 		dispatch({ type: TOGGLE_SIDEBAR });
 	};
 
