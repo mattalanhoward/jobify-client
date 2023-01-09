@@ -24,6 +24,7 @@ import {
 	EDIT_JOB_BEGIN,
 	EDIT_JOB_SUCCESS,
 	EDIT_JOB_ERROR,
+	TOGGLE_JOB_DESCRIPTION,
 } from "./actions";
 
 import { initialState } from "./appContext";
@@ -173,6 +174,7 @@ const reducer = (state, action) => {
 			status: "pending",
 			jobType: "full-time",
 			jobLocation: state.userLocation,
+			jobDescription: "",
 		};
 		return {
 			...state,
@@ -227,7 +229,15 @@ const reducer = (state, action) => {
 
 	if (action.type === SET_EDIT_JOB) {
 		const job = state.jobs.find((job) => job._id === action.payload.id);
-		const { _id, position, company, jobLocation, jobType, status } = job;
+		const {
+			_id,
+			position,
+			company,
+			jobLocation,
+			jobType,
+			status,
+			jobDescription,
+		} = job;
 		return {
 			...state,
 			isEditing: true,
@@ -237,6 +247,7 @@ const reducer = (state, action) => {
 			jobLocation,
 			jobType,
 			status,
+			jobDescription,
 		};
 	}
 
@@ -271,6 +282,13 @@ const reducer = (state, action) => {
 			showAlert: true,
 			alertType: "danger",
 			alertText: action.payload.msg,
+		};
+	}
+
+	if (action.type === TOGGLE_JOB_DESCRIPTION) {
+		return {
+			...state,
+			showJobDescription: !state.showJobDescription,
 		};
 	}
 

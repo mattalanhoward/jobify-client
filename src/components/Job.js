@@ -4,6 +4,7 @@ import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/Job";
+import JobDescription from "./JobDescription";
 
 const Job = ({
 	_id,
@@ -13,8 +14,10 @@ const Job = ({
 	jobType,
 	createdAt,
 	status,
+	jobDescription,
 }) => {
-	const { setEditJob, deleteJob } = useAppContext();
+	const { setEditJob, deleteJob, toggleJobDescription, showJobDescription } =
+		useAppContext();
 	let date = moment(createdAt);
 	date = date.format("Do MMM, YYYY");
 	return (
@@ -31,6 +34,7 @@ const Job = ({
 					<JobInfo icon={<FaLocationArrow />} text={jobLocation} />
 					<JobInfo icon={<FaCalendarAlt />} text={date} />
 					<JobInfo icon={<FaBriefcase />} text={jobType} />
+
 					<div className={`status ${status}`}>{status}</div>
 				</div>
 				<footer>
@@ -51,7 +55,17 @@ const Job = ({
 						>
 							Delete
 						</button>
+						<button
+							type="button"
+							className="btn description-btn"
+							onClick={() => toggleJobDescription(_id)}
+						>
+							Job Description
+						</button>
 					</div>
+					{showJobDescription && (
+						<JobDescription icon={<FaBriefcase />} text={jobDescription} />
+					)}
 				</footer>
 			</div>
 		</Wrapper>

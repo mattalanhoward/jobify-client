@@ -28,6 +28,7 @@ import {
 	EDIT_JOB_BEGIN,
 	EDIT_JOB_SUCCESS,
 	EDIT_JOB_ERROR,
+	TOGGLE_JOB_DESCRIPTION,
 } from "./actions";
 
 const token = localStorage.getItem("token");
@@ -56,6 +57,8 @@ const initialState = {
 	totalJobs: 0,
 	page: 1,
 	numOfPages: 1,
+	showJobDescription: false,
+	jobDescription: "",
 };
 
 const AppContext = React.createContext();
@@ -207,13 +210,21 @@ const AppProvider = ({ children }) => {
 			type: CREATE_JOB_BEGIN,
 		});
 		try {
-			const { position, company, jobLocation, jobType, status } = state;
+			const {
+				position,
+				company,
+				jobLocation,
+				jobType,
+				status,
+				jobDescription,
+			} = state;
 			await authFetch.post("/jobs", {
 				position,
 				company,
 				jobLocation,
 				jobType,
 				status,
+				jobDescription,
 			});
 			dispatch({ type: CREATE_JOB_SUCCESS });
 			dispatch({ type: CLEAR_VALUES });
@@ -252,7 +263,14 @@ const AppProvider = ({ children }) => {
 	const editJob = async () => {
 		dispatch({ type: EDIT_JOB_BEGIN });
 		try {
-			const { position, company, jobLocation, jobType, status } = state;
+			const {
+				position,
+				company,
+				jobLocation,
+				jobType,
+				status,
+				jobDescription,
+			} = state;
 
 			await authFetch.patch(`/jobs/${state.editJobId}`, {
 				company,
@@ -260,6 +278,7 @@ const AppProvider = ({ children }) => {
 				jobLocation,
 				jobType,
 				status,
+				jobDescription,
 			});
 			dispatch({ type: EDIT_JOB_SUCCESS });
 			dispatch({
@@ -286,6 +305,11 @@ const AppProvider = ({ children }) => {
 		}
 	};
 
+	const toggleJobDescription = (e) => {
+		dispatch({ type: TOGGLE_JOB_DESCRIPTION });
+		console.log(`View Job Description`, e);
+	};
+
 	useEffect(() => {
 		getJobs();
 	}, []);
@@ -308,6 +332,7 @@ const AppProvider = ({ children }) => {
 				setEditJob,
 				deleteJob,
 				editJob,
+				toggleJobDescription,
 			}}
 		>
 			{children}
