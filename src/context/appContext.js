@@ -149,7 +149,7 @@ const AppProvider = ({ children }) => {
 	};
 
 	const loginUser = async (currentUser) => {
-		console.log(`login current user`, currentUser);
+		// console.log(`login current user`, currentUser);
 		dispatch({ type: LOGIN_USER_BEGIN });
 		try {
 			const { data } = await axios.post("/api/v1/auth/login", currentUser);
@@ -255,7 +255,7 @@ const AppProvider = ({ children }) => {
 			});
 		} catch (error) {
 			console.log(error.reponse);
-			// logoutUser();
+			logoutUser();
 		}
 		clearAlert();
 	};
@@ -297,7 +297,7 @@ const AppProvider = ({ children }) => {
 			getJobs();
 		} catch (error) {
 			console.log(error.response);
-			// logoutUser()
+			logoutUser();
 		}
 	};
 
@@ -314,7 +314,7 @@ const AppProvider = ({ children }) => {
 			});
 		} catch (error) {
 			console.log(error.response);
-			// logoutUser()
+			logoutUser();
 		}
 	};
 
@@ -328,6 +328,7 @@ const AppProvider = ({ children }) => {
 
 	useEffect(() => {
 		getJobs();
+		// eslint-disable-next-line
 	}, []);
 
 	return (

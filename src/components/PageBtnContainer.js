@@ -24,7 +24,6 @@ const PageBtnContainer = () => {
 	const pages = Array.from({ length: numOfPages }, (_, index) => {
 		return index + 1;
 	});
-	console.log(pages);
 	return (
 		<Wrapper>
 			{page > 1 ? (
